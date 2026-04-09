@@ -1,26 +1,100 @@
 @import "tailwindcss";
 
+/* ============================= */
+/* 🎨 DESIGN TOKENS (CORE) */
+/* ============================= */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-primary: 33 92 168;   /* #215CA8 */
+  --color-dark: 33 33 33;       /* #212121 */
+  --color-light: 255 255 255;
+
+  --color-gray-soft: 107 114 128;
+
+  --shadow-soft: 0 10px 30px rgba(0,0,0,0.08);
+  --shadow-strong: 0 20px 60px rgba(0,0,0,0.15);
+
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.75rem;
+  --radius-3xl: 2rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* ============================= */
+/* 🧠 BASE */
+/* ============================= */
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply antialiased;
+  background-color: rgb(var(--color-primary));
+  color: rgb(var(--color-dark));
+}
+
+/* ============================= */
+/* 🔤 TIPOGRAFIA */
+/* ============================= */
+
+h1 {
+  @apply font-bold leading-tight;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+h2 {
+  @apply text-3xl md:text-4xl font-bold;
+}
+
+p {
+  color: rgb(var(--color-gray-soft));
+  @apply leading-relaxed;
+}
+
+/* ============================= */
+/* 🔘 BOTÕES */
+/* ============================= */
+
+.btn-primary {
+  background-color: rgb(var(--color-primary));
+  @apply text-white px-8 py-3 rounded-full font-semibold transition;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-outline {
+  @apply border text-white px-8 py-3 rounded-full font-semibold transition;
+  border-color: rgb(var(--color-light));
+}
+
+.btn-outline:hover {
+  background-color: rgb(var(--color-light));
+  color: rgb(var(--color-primary));
+}
+
+.btn-white {
+  background-color: rgb(var(--color-light));
+  color: rgb(var(--color-primary));
+  @apply px-8 py-3 rounded-full font-semibold transition;
+}
+
+/* ============================= */
+/* 📦 CARDS */
+/* ============================= */
+
+.card {
+  background-color: rgb(var(--color-light));
+  border-radius: var(--radius-3xl);
+  box-shadow: var(--shadow-soft);
+  @apply transition;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-strong);
+}
+
+/* ============================= */
+/* 📐 CONTAINER */
+/* ============================= */
+
+.container-main {
+  @apply max-w-7xl mx-auto px-4 md:px-10;
 }

@@ -1,17 +1,27 @@
-// tailwind.config.ts
-require('@tailwindcss/typography')
-export default {
-  theme: {
-    extend: {
-      colors: {
-        primary: '#215CA8',
-        dark: '#212121',
+import type { Config } from "tailwindcss";
 
-      },
-      fontFamily: {
-        sans: ['Poppins', 'sans-serif'],
-        display: ['Outfit', 'sans-serif'], // Use essa nos seus H1, H2, H3
-      },
+const config: Config = {
+  content: [
+    "./app/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+  ],
+theme: {
+  extend: {
+    colors: {
+      primary: "#215CA8",
+      dark: "#212121",
+      "gray-soft": "#6B7280",
+    },
+    boxShadow: {
+      soft: "0 10px 30px rgba(0,0,0,0.08)",
+      strong: "0 20px 60px rgba(0,0,0,0.15)",
+    },
+    fontSize: {
+      hero: "clamp(2.5rem, 5vw, 4.5rem)",
     },
   },
+},
+  plugins: [],
 };
+
+export default config;

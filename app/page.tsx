@@ -1,68 +1,98 @@
-import { createClient } from '@/utils/supabase/server';
-import ListaDestaques from '@/components/ListaDestaques';
+"use client";
 
-export default async function Home() {
-  const supabase = await createClient();
+import { HeroSection } from "@/components/HeroSection";
+import { ExperienceCard } from "@/components/ExperienceCard";
+import { GalleryGrid } from "@/components/GalleryGrid";
+import { Section } from "@/components/Section";
+import { Heading } from "@/components/Heading";
+import { Button } from "@/components/Button";
+import Link from "next/link";
 
-  // Busca os dados diretamente no servidor
-  const { data: destaques } = await supabase
-    .from('estabelecimentos')
-    .select('*, categorias(nome)');
-
+export default function Home() {
   return (
-    <main className="min-h-screen bg-[#215CA8] p-4 md:p-8 font-sans">
-      
-      {/* Container Central (O "Cartão" Branco) */}
-      <div className="bg-white rounded-[2rem] shadow-2xl overflow-hidden max-w-7xl mx-auto">
+    <>
+      {/* HERO */}
+      <HeroSection
+        title="Descubra a Praia da Baleia"
+        subtitle="Natureza, tranquilidade e experiências inesquecíveis"
+        videoSrc="/hero.mp4"
+      />
 
-        {/* Video Section e Links Laterais - Alinhados e Centralizados */}
-        <section className="py-10 px-4 md:px-12">
-          {/* items-center garante o alinhamento vertical entre o bloco do vídeo e o bloco de matérias */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            {/* Coluna do Vídeo (Ocupa 7 colunas) */}
-            <div className="lg:col-span-7">
-              <div className="aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl">
-                <iframe 
-                  className="w-full h-full"
-                  src="https://www.youtube.com/embed/DgIfzc4PLWc" 
-                  title="Vídeo Turístico"
-                  allow="autoplay; encrypted-media"
-                  allowFullScreen
-                />
+      {/* HUB DE NAVEGAÇÃO */}
+      <Section>
+        <Heading
+          title="Planeje sua experiência"
+          subtitle="Tudo o que você precisa para viver o melhor da Praia da Baleia"
+        />
+
+        <div className="grid md:grid-cols-3 gap-6">
+          {[
+            { title: "A Praia", link: "/sobre" },
+            { title: "Experiências", link: "/experiencias" },
+            { title: "Hospedagem", link: "/hospedagem" },
+            { title: "Gastronomia", link: "/gastronomia" },
+            { title: "Como Chegar", link: "/como-chegar" },
+            { title: "Galeria", link: "/galeria" },
+          ].map((item, i) => (
+            <Link key={i} href={item.link}>
+              <div className="card flex items-center justify-center h-40 cursor-pointer">
+                <span className="font-semibold text-lg text-[rgb(var(--color-dark))] hover:text-[rgb(var(--color-primary))] transition">
+                  {item.title}
+                </span>
               </div>
-            </div>
+            </Link>
+          ))}
+        </div>
+      </Section>
 
-            {/* Coluna das Matérias Relacionadas (Ocupa 5 colunas) */}
-            <div className="lg:col-span-5 flex flex-col gap-6">
-              <h3 className="p-2 text-2xl font-black text-[#215CA8]">Leia também:</h3>
-              
-              {/* Link de Matéria 1 */}
-              <a href="/materias/dicas-de-praia" className="block p-6 bg-slate-50 rounded-2xl hover:bg-slate-100 transition border-l-4 border-[#215CA8]">
-                <h4 className="font-bold text-[#212121] text-lg">As 5 melhores barracas na Praia da Baleia</h4>
-                <p className="text-sm text-slate-600 mt-1">Saiba onde comer aquele peixe fresco com o pé na areia.</p>
-              </a>
+      {/* EXPERIÊNCIAS */}
+      <Section>
+        <Heading
+          title="Experiências"
+          subtitle="Viva momentos únicos na Praia da Baleia"
+        />
 
-              {/* Link de Matéria 2 */}
-              <a href="/materias/como-chegar" className="block p-6 bg-slate-50 rounded-2xl hover:bg-slate-100 transition border-l-4 border-[#215CA8]">
-                <h4 className="font-bold text-[#212121] text-lg">Guia Completo: Como chegar à Baleia</h4>
-                <p className="text-sm text-slate-600 mt-1">Dicas de transporte, melhores horários e estradas.</p>
-              </a>
+        <div className="grid md:grid-cols-3 gap-6">
+          <ExperienceCard title="Passeios" image="/images/passeios.jpg" />
+          <ExperienceCard title="Pôr do Sol" image="/images/pordosol.jpg" />
+          <ExperienceCard title="Gastronomia" image="/images/gastronomia.jpg" />
+        </div>
+      </Section>
 
-              {/* Link de Matéria 3 */}
-              <a href="/materias/temporada" className="block p-6 bg-slate-50 rounded-2xl hover:bg-slate-100 transition border-l-4 border-[#215CA8]">
-                <h4 className="font-bold text-[#212121] text-lg">A melhor época para visitar o Ceará</h4>
-                <p className="text-sm text-slate-600 mt-1">Sol o ano todo? Entenda o clima da nossa região.</p>
-              </a>
-            </div>
+      {/* GALERIA */}
+      {/*<Section>/*}
+        {/*<Heading title="Galeria" subtitle="Veja de perto a beleza da Praia da Baleia"/>/*}
 
+        {/*<GalleryGrid items={images} />/*}
+      {/*</Section> /*}
+
+      {/* STORY */}
+      <Section className="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 className="mb-6">Uma história que conecta</h2>
+          <p className="mb-6">
+            A Praia da Baleia é um encontro com a cultura, o tempo desacelerado
+            e a essência do litoral cearense.
+          </p>
+          <Link href="/sobre" className="text-[rgb(var(--color-primary))] font-semibold">
+            Conhecer mais →
+          </Link>
+        </div>
+
+        <div className="h-80 rounded-[2rem] bg-gray-200" />
+      </Section>
+
+      {/* CTA FINAL */}
+      <Section>
+        <div className="bg-[rgb(var(--color-primary))] text-white text-center py-16 rounded-[2rem]">
+          <h2 className="mb-6">Agora é sua vez de viver essa experiência</h2>
+
+          <div className="flex justify-center gap-4 flex-wrap">
+            <Button>Planejar viagem</Button>
+            <Button variant="white">Onde ficar</Button>
           </div>
-        </section>
-
-        {/* Lista de Destaques (Componente Interativo) */}
-        <ListaDestaques initialData={destaques || []} />
-        
-      </div>
-    </main>
+        </div>
+      </Section>
+    </>
   );
 }
