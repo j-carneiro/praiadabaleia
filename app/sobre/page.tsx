@@ -5,6 +5,7 @@ import { Heading } from "@/components/Heading";
 import { Button } from "@/components/Button";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { createClient } from "@supabase/supabase-js";
 
 export default function SobrePage() {
   return (
@@ -17,9 +18,9 @@ export default function SobrePage() {
           transition={{ duration: 0.8 }}
         >
           <h1 className="mb-4">Sobre a Praia da Baleia</h1>
-          <p className="max-w-2xl mx-auto opacity-90">
+          <i className="max-w-2xl text-[#D4AF37] mx-auto opacity-90">
             Um destino que vai além da paisagem — é experiência, cultura e conexão.
-          </p>
+          </i>
         </motion.div>
       </section>
 
@@ -43,14 +44,14 @@ export default function SobrePage() {
             </p>
           </div>
 
-          <div className="h-80 rounded-[2rem] bg-gray-200" />
+          <div className="h-80 rounded-4xl bg-gray-200" />
         </div>
       </Section>
 
       {/* CULTURA (quebra suave) */}
       <Section className="bg-[#f8fafc] py-28">
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="h-80 rounded-[2rem] bg-gray-200" />
+          <div className="h-80 rounded-4xl bg-gray-200" />
 
           <div>
             <h2 className="mb-6">Mais que paisagem, uma identidade</h2>
@@ -81,7 +82,7 @@ export default function SobrePage() {
           {["Tranquilidade", "Belezas naturais", "Cultura local"].map((item, i) => (
             <div
               key={i}
-              className="bg-white rounded-[2rem] p-8 shadow-sm text-center"
+              className="bg-white rounded-4xl p-8 shadow-sm text-center"
             >
               <h3 className="font-semibold mb-2">{item}</h3>
               <p>
@@ -95,7 +96,7 @@ export default function SobrePage() {
 
       {/* CTA FINAL */}
       <Section className="py-20">
-        <div className="bg-[rgb(var(--color-primary))] text-white text-center py-16 rounded-[2rem]">
+        <div className="bg-[rgb(var(--color-primary))] text-white text-center py-16 rounded-4xl">
           <h2 className="mb-6">Agora é sua vez de viver essa experiência</h2>
 
           <div className="flex justify-center gap-4 flex-wrap">

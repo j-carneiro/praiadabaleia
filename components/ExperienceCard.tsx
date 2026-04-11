@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 
 interface ExperienceCardProps {
@@ -12,7 +14,7 @@ export function ExperienceCard({ title, image }: ExperienceCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       whileHover={{ scale: 1.03 }}
       transition={{ duration: 0.6 }}
-      className="relative h-64 rounded-[2rem] overflow-hidden cursor-pointer group"
+      className="relative h-64 rounded-4xl overflow-hidden cursor-pointer group"
     >
       {/* IMAGEM */}
       <div

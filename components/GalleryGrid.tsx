@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 
 interface GalleryItem {
@@ -18,7 +20,7 @@ export function GalleryGrid({ items }: GalleryGridProps) {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: index * 0.05 }}
-          className="relative overflow-hidden rounded-[1.5rem] group cursor-pointer break-inside-avoid"
+          className="relative overflow-hidden rounded-3xl group cursor-pointer break-inside-avoid"
         >
           {/* IMAGEM */}
           <img

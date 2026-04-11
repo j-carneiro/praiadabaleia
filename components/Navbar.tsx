@@ -15,8 +15,8 @@ export function Navbar() {
     { name: 'Início', href: '/' },
     { name: 'A Praia', href: '/sobre' },
     { name: 'Experiências', href: '/experiencias' },
-    { name: 'Hospedagem', href: '/hospedagem' },
-    { name: 'Gastronomia', href: '/gastronomia' },
+    { name: 'Passeios', href: '/passeios' },
+    { name: 'Parceiros', href: '/parceiros' },
     { name: 'Como Chegar', href: '/como-chegar' },
   ];
 

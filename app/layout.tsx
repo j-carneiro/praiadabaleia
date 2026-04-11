@@ -1,5 +1,19 @@
 import './globals.css'
 import { Navbar } from '@/components/Navbar'
+import { Inter, Poppins } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  variable: "--font-poppins",
+});
+
+
 
 export default function RootLayout({
   children,
@@ -8,13 +22,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
-      <body className="font-sans">
+      <body className={`${inter.variable} ${poppins.variable} font-sans`}>
 
         {/* FUNDO AZUL */}
         <div className="bg-[#215CA8] min-h-screen p-3 md:p-6">
 
           {/* CONTAINER PRINCIPAL */}
-          <div className="bg-white rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.15)] overflow-hidden max-w-7xl mx-auto">
+          <div className="bg-white rounded-4xl shadow-[0_20px_60px_rgba(0,0,0,0.15)] overflow-hidden max-w-7xl mx-auto">
 
             <Navbar />
 

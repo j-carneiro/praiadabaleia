@@ -9,6 +9,7 @@ theme: {
     colors: {
       primary: "#215CA8",
       dark: "#212121",
+      accent: "#D4AF37",
       "gray-soft": "#6B7280",
     },
     boxShadow: {

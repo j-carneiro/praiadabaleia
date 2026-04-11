@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
@@ -47,9 +49,9 @@ export function HeroSection({ title, subtitle, videoSrc }: HeroSectionProps) {
       >
         <h1 className="mb-6 max-w-3xl">{title}</h1>
 
-        <p className="text-lg md:text-xl mb-8 opacity-90 max-w-xl">
+        <i className="text-lg text-[#D4AF37] md:text-xl font-semibold mb-8 opacity-90 max-w-xl">
           {subtitle}
-        </p>
+        </i>
 
         <div className="flex flex-wrap gap-4 justify-center">
           <Link href="/sobre" className="btn-primary">Explorar</Link>

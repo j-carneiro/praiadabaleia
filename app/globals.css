@@ -1,100 +1,123 @@
 @import "tailwindcss";
 
 /* ============================= */
-/* 🎨 DESIGN TOKENS (CORE) */
+/* 🎨 VARIÁVEIS DE COR */
 /* ============================= */
-
 :root {
   --color-primary: 33 92 168;   /* #215CA8 */
   --color-dark: 33 33 33;       /* #212121 */
-  --color-light: 255 255 255;
-
-  --color-gray-soft: 107 114 128;
-
-  --shadow-soft: 0 10px 30px rgba(0,0,0,0.08);
-  --shadow-strong: 0 20px 60px rgba(0,0,0,0.15);
-
-  --radius-xl: 1.25rem;
-  --radius-2xl: 1.75rem;
-  --radius-3xl: 2rem;
+  --color-accent: 212 175 55;   /* #D4AF37 */
 }
 
 /* ============================= */
-/* 🧠 BASE */
+/* 🌐 BASE */
 /* ============================= */
+html {
+  scroll-behavior: smooth;
+}
 
 body {
-  @apply antialiased;
-  background-color: rgb(var(--color-primary));
-  color: rgb(var(--color-dark));
+  @apply bg-white text-[rgb(var(--color-dark))] font-sans antialiased;
 }
 
 /* ============================= */
 /* 🔤 TIPOGRAFIA */
 /* ============================= */
 
+/* Títulos principais */
 h1 {
-  @apply font-bold leading-tight;
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-family: var(--font-poppins);
+  @apply text-4xl md:text-6xl font-bold leading-tight tracking-tight;
 }
 
 h2 {
-  @apply text-3xl md:text-4xl font-bold;
+  font-family: var(--font-poppins);
+  @apply text-3xl md:text-4xl font-semibold tracking-tight;
 }
 
+h3 {
+  font-family: var(--font-poppins);
+  @apply text-xl font-semibold;
+}
+
+/* Texto padrão */
 p {
-  color: rgb(var(--color-gray-soft));
-  @apply leading-relaxed;
+  @apply text-gray-600 text-base md:text-lg leading-relaxed;
 }
 
+/* Subtítulos (azul premium) */
+.subtitle {
+  @apply text-[rgb(var(--color-primary))] tracking-wide font-bold md:text-base;
+}
+
+.i {
+  @apply text-[#D4AF37] tracking-wide font-semibold md:text-base;
+}
 /* ============================= */
 /* 🔘 BOTÕES */
 /* ============================= */
 
 .btn-primary {
-  background-color: rgb(var(--color-primary));
-  @apply text-white px-8 py-3 rounded-full font-semibold transition;
-}
-
-.btn-primary:hover {
-  opacity: 0.9;
+  @apply bg-[rgb(var(--color-primary))] text-white px-8 py-3 rounded-full font-semibold shadow-sm hover:opacity-90 transition;
 }
 
 .btn-outline {
-  @apply border text-white px-8 py-3 rounded-full font-semibold transition;
-  border-color: rgb(var(--color-light));
-}
-
-.btn-outline:hover {
-  background-color: rgb(var(--color-light));
-  color: rgb(var(--color-primary));
+  @apply border border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-[rgb(var(--color-primary))] transition;
 }
 
 .btn-white {
-  background-color: rgb(var(--color-light));
-  color: rgb(var(--color-primary));
-  @apply px-8 py-3 rounded-full font-semibold transition;
+  @apply bg-white text-[rgb(var(--color-primary))] px-8 py-3 rounded-full font-semibold hover:bg-gray-200 transition;
 }
 
 /* ============================= */
-/* 📦 CARDS */
+/* 🧩 CARDS */
 /* ============================= */
 
 .card {
-  background-color: rgb(var(--color-light));
-  border-radius: var(--radius-3xl);
-  box-shadow: var(--shadow-soft);
-  @apply transition;
-}
-
-.card:hover {
-  box-shadow: var(--shadow-strong);
+  @apply bg-white rounded-[2rem] shadow-sm hover:shadow-xl transition;
 }
 
 /* ============================= */
-/* 📐 CONTAINER */
+/* 📦 CONTAINER PADRÃO */
 /* ============================= */
 
-.container-main {
+.container-default {
   @apply max-w-7xl mx-auto px-4 md:px-10;
+}
+
+/* ============================= */
+/* 🎯 UTILITÁRIOS */
+/* ============================= */
+
+/* Fundo azul padrão */
+.bg-primary {
+  background-color: rgb(var(--color-primary));
+}
+
+/* Texto dourado */
+.text-accent {
+  color: rgb(var(--color-accent));
+}
+
+/* Texto escuro */
+.text-dark {
+  color: rgb(var(--color-dark));
+}
+
+/* ============================= */
+/* ✨ MICRO-INTERAÇÕES */
+/* ============================= */
+
+/* Hover suave em links */
+a {
+  @apply transition-opacity;
+}
+
+a:hover {
+  @apply opacity-80;
+}
+
+/* Imagens mais elegantes */
+img {
+  @apply rounded-lg;
 }
