@@ -18,7 +18,7 @@ export default function SobrePage() {
           transition={{ duration: 0.8 }}
         >
           <h1 className="mb-4">Sobre a Praia da Baleia</h1>
-          <i className="max-w-2xl text-[#D4AF37] mx-auto opacity-90">
+          <i className="max-w-2xl text-[#D4AF37] mx-auto">
             Um destino que vai além da paisagem — é experiência, cultura e conexão.
           </i>
         </motion.div>

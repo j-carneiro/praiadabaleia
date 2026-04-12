@@ -18,7 +18,7 @@ export default async function ParceirosPage() {
       <section className="h-[50vh] flex items-center justify-center bg-[rgb(var(--color-primary))] text-white text-center px-4">
         <div>
           <h1 className="mb-4">Parceiros da Praia da Baleia</h1>
-          <i className="max-w-2xl text-[#D4AF37] mx-auto opacity-90">
+          <i className="max-w-2xl text-[#D4AF37] mx-auto">
             Negócios locais que tornam sua experiência mais completa
           </i>
         </div>

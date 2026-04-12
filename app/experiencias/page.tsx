@@ -20,7 +20,7 @@ export default async function ExperienciasPage() {
       <section className="h-[50vh] flex items-center justify-center bg-[rgb(var(--color-primary))] text-white text-center px-4">
         <div>
           <h1 className="mb-4">Experiências na Praia da Baleia</h1>
-          <i className="max-w-2xl mx-auto opacity-90">
+          <i className="max-w-2xl mx-auto">
             Descubra atividades, passeios e vivências que tornam sua viagem única
           </i>
         </div>

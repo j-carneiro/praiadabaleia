@@ -41,7 +41,7 @@ export function Navbar() {
 
               {/* underline animada */}
               <span
-                className={`absolute left-0 -bottom-1 h-[2px] bg-[#215CA8] transition-all duration-300 ${
+                className={`absolute left-0 -bottom-1 h-0,5 bg-[#215CA8] transition-all duration-300 ${
                   isActive(link.href) ? 'w-full' : 'w-0 group-hover:w-full'
                 }`}
               />

@@ -20,7 +20,7 @@ export default async function PasseiosPage() {
       <section className="h-[60vh] flex items-center justify-center bg-[rgb(var(--color-primary))] text-white text-center px-4">
         <div>
           <h1 className="mb-4">Passeios na Praia da Baleia</h1>
-          <i className="max-w-2xl text-[#D4AF37] mx-auto opacity-90">
+          <i className="max-w-2xl text-[#D4AF37] mx-auto">
             Dunas, vento e adrenalina — descubra experiências únicas no litoral
           </i>
         </div>
@@ -83,7 +83,7 @@ export default async function PasseiosPage() {
 
       {/* CTA FINAL */}
       <Section className="py-20">
-        <div className="bg-[rgb(var(--color-primary))] text-white text-center py-16 rounded-[2rem]">
+        <div className="bg-[rgb(var(--color-primary))] text-white text-center py-16 rounded-4xl">
           <h2 className="mb-6">Pronto para viver essa experiência?</h2>
 
           <div className="flex justify-center gap-4 flex-wrap">

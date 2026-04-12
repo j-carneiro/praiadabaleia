@@ -49,7 +49,7 @@ export function HeroSection({ title, subtitle, videoSrc }: HeroSectionProps) {
       >
         <h1 className="mb-6 max-w-3xl">{title}</h1>
 
-        <i className="text-lg text-[#D4AF37] md:text-xl font-semibold mb-8 opacity-90 max-w-xl">
+        <i className="text-lg text-[#D4AF37] md:text-xl font-semibold mb-8 max-w-xl">
           {subtitle}
         </i>
 
