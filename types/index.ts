@@ -1,15 +1,4 @@
-export interface Categoria {
-  nome: string;
-  slug: string;
-}
-
-export interface Disponibilidade {
-  id: string;
-  data_inicio: string;
-  data_fim: string;
-  status: string;
-}
-
+// 🔥 MENU (único)
 export interface Menu {
   id: string;
   nome: string;
@@ -17,6 +6,21 @@ export interface Menu {
   preco: number;
 }
 
+// 🔥 CATEGORIA
+export interface Categoria {
+  nome: string;
+  slug: string;
+}
+
+// 🔥 DISPONIBILIDADE
+export interface Disponibilidade {
+  id: string;
+  data_inicio: string;
+  data_fim: string;
+  status: string;
+}
+
+// 🔥 ESTABELECIMENTO (modelo principal)
 export interface Estabelecimento {
   id: string;
   nome: string;
@@ -27,6 +31,8 @@ export interface Estabelecimento {
   slug: string;
   status_aberto: boolean;
   categorias: Categoria | null;
+
+  // 🔥 ARRAYS OPCIONAIS VINDOS DO BACKEND
   disponibilidade?: Disponibilidade[];
   menus?: Menu[];
 }
