@@ -6,7 +6,7 @@ export async function getPartnerBySlug(
 ): Promise<Estabelecimento | null> {
   const slug = slugParam?.trim().toLowerCase();
 
-  // 🔍 BUSCA PRINCIPAL (POR SLUG)
+  // 🔍 BUSCA POR SLUG
   const { data, error } = await supabase
     .from("estabelecimentos")
     .select(`
@@ -18,6 +18,7 @@ export async function getPartnerBySlug(
       whatsapp_link,
       status_aberto,
       is_featured,
+      categoria_id,
       categorias:categoria_id (nome, slug),
       disponibilidade (
         id,
@@ -36,20 +37,14 @@ export async function getPartnerBySlug(
     .maybeSingle();
 
   if (error) {
-    console.error("Erro ao buscar por slug:", error.message);
+    console.error("Erro slug:", error.message);
   }
 
-  // ✅ SE ENCONTROU
   if (data) {
-    return {
-      ...data,
-      categorias: Array.isArray(data.categorias)
-        ? data.categorias[0] || null
-        : data.categorias || null,
-    };
+    return normalize(data);
   }
 
-  // 🔁 FALLBACK (BUSCA POR ID)
+  // 🔁 FALLBACK POR ID
   const { data: fallback, error: fallbackError } = await supabase
     .from("estabelecimentos")
     .select(`
@@ -61,6 +56,7 @@ export async function getPartnerBySlug(
       whatsapp_link,
       status_aberto,
       is_featured,
+      categoria_id,
       categorias:categoria_id (nome, slug),
       disponibilidade (
         id,
@@ -79,19 +75,31 @@ export async function getPartnerBySlug(
     .maybeSingle();
 
   if (fallbackError) {
-    console.error("Erro no fallback por ID:", fallbackError.message);
+    console.error("Erro fallback:", fallbackError.message);
   }
 
-  if (!fallback) {
-    console.warn("Nenhum parceiro encontrado para:", slugParam);
-    return null;
-  }
+  if (!fallback) return null;
 
-  // ✅ RETORNO FINAL NORMALIZADO
+  return normalize(fallback);
+}
+
+function normalize(data: any): Estabelecimento {
   return {
-    ...fallback,
-    categorias: Array.isArray(fallback.categorias)
-      ? fallback.categorias[0] || null
-      : fallback.categorias || null,
+    id: data.id,
+    nome: data.nome,
+    slug: data.slug,
+    descricao: data.descricao,
+    foto_url: data.foto_url,
+    whatsapp_link: data.whatsapp_link,
+    status_aberto: data.status_aberto,
+    is_featured: data.is_featured,
+
+    // 🔥 NORMALIZAÇÃO CRÍTICA
+    categorias: Array.isArray(data.categorias)
+      ? data.categorias[0] || null
+      : data.categorias || null,
+
+    disponibilidade: data.disponibilidade || [],
+    menus: data.menus || [],
   };
 }
