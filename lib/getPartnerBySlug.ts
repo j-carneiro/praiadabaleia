@@ -4,7 +4,6 @@ import { Estabelecimento } from "@/types";
 export async function getPartnerBySlug(
   slugParam: string
 ): Promise<Estabelecimento | null> {
-  // 🔧 normaliza slug vindo da URL
   const slug = slugParam?.trim().toLowerCase();
 
   // 🔍 BUSCA PRINCIPAL (POR SLUG)
@@ -19,7 +18,7 @@ export async function getPartnerBySlug(
       whatsapp_link,
       status_aberto,
       is_featured,
-      categorias (nome, slug),
+      categorias:categoria_id (nome, slug),
       disponibilidade (
         id,
         data_inicio,
@@ -36,16 +35,17 @@ export async function getPartnerBySlug(
     .eq("slug", slug)
     .maybeSingle();
 
-  // ⚠️ log apenas se erro real existir
-  if (error && Object.keys(error).length > 0) {
-    console.error("Erro ao buscar por slug:", error);
+  if (error) {
+    console.error("Erro ao buscar por slug:", error.message);
   }
 
-  // ✅ SE ENCONTROU, RETORNA
+  // ✅ SE ENCONTROU
   if (data) {
     return {
       ...data,
-      categorias: data.categorias?.[0] || null,
+      categorias: Array.isArray(data.categorias)
+        ? data.categorias[0] || null
+        : data.categorias || null,
     };
   }
 
@@ -59,6 +59,7 @@ export async function getPartnerBySlug(
       descricao,
       foto_url,
       whatsapp_link,
+      status_aberto,
       is_featured,
       categorias:categoria_id (nome, slug),
       disponibilidade (
@@ -77,12 +78,10 @@ export async function getPartnerBySlug(
     .eq("id", slugParam)
     .maybeSingle();
 
-  // ⚠️ log apenas se erro real existir
-  if (fallbackError && Object.keys(fallbackError).length > 0) {
-    console.error("Erro no fallback por ID:", fallbackError);
+  if (fallbackError) {
+    console.error("Erro no fallback por ID:", fallbackError.message);
   }
 
-  // ❌ NÃO ENCONTROU NADA
   if (!fallback) {
     console.warn("Nenhum parceiro encontrado para:", slugParam);
     return null;
@@ -91,6 +90,8 @@ export async function getPartnerBySlug(
   // ✅ RETORNO FINAL NORMALIZADO
   return {
     ...fallback,
-    categorias: fallback.categorias?.[0] || null,
+    categorias: Array.isArray(fallback.categorias)
+      ? fallback.categorias[0] || null
+      : fallback.categorias || null,
   };
 }
