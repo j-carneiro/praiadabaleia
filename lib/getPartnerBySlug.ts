@@ -1,12 +1,12 @@
 import { supabase } from "@/lib/supabase";
-import { Estabelecimento } from "@/types";
+import { Estabelecimento, Categoria, Menu, Disponibilidade } from "@/types";
 
 export async function getPartnerBySlug(
   slugParam: string
 ): Promise<Estabelecimento | null> {
   const slug = slugParam?.trim().toLowerCase();
 
-  // 🔍 BUSCA POR SLUG
+  // 🔍 BUSCA PRINCIPAL
   const { data, error } = await supabase
     .from("estabelecimentos")
     .select(`
@@ -18,8 +18,7 @@ export async function getPartnerBySlug(
       whatsapp_link,
       status_aberto,
       is_featured,
-      categoria_id,
-      categorias:categoria_id (nome, slug),
+      categorias (nome, slug),
       disponibilidade (
         id,
         data_inicio,
@@ -36,12 +35,11 @@ export async function getPartnerBySlug(
     .eq("slug", slug)
     .maybeSingle();
 
-  if (error) {
-    console.error("Erro slug:", error.message);
+  if (error && Object.keys(error).length > 0) {
+    console.error("Erro ao buscar por slug:", error);
   }
 
   if (data) {
-    console.log("RESULTADO:", data);
     return normalize(data);
   }
 
@@ -57,7 +55,6 @@ export async function getPartnerBySlug(
       whatsapp_link,
       status_aberto,
       is_featured,
-      categoria_id,
       categorias:categoria_id (nome, slug),
       disponibilidade (
         id,
@@ -75,32 +72,49 @@ export async function getPartnerBySlug(
     .eq("id", slugParam)
     .maybeSingle();
 
-  if (fallbackError) {
-    console.error("Erro fallback:", fallbackError.message);
+  if (fallbackError && Object.keys(fallbackError).length > 0) {
+    console.error("Erro fallback:", fallbackError);
   }
 
-  if (!fallback) return null;
+  if (!fallback) {
+    console.warn("Nenhum parceiro encontrado para:", slugParam);
+    return null;
+  }
 
   return normalize(fallback);
 }
 
-function normalize(data: any): Estabelecimento {
+//
+// 🔥 FUNÇÃO CENTRAL (SEM ANY)
+//
+function normalize(raw: {
+  id: string;
+  nome: string;
+  slug: string;
+  descricao: string;
+  foto_url: string;
+  whatsapp_link: string;
+  status_aberto: boolean;
+  is_featured: boolean;
+  categorias: Categoria[] | null;
+  disponibilidade?: Disponibilidade[];
+  menus?: Menu[];
+}): Estabelecimento {
   return {
-    id: data.id,
-    nome: data.nome,
-    slug: data.slug,
-    descricao: data.descricao,
-    foto_url: data.foto_url,
-    whatsapp_link: data.whatsapp_link,
-    status_aberto: data.status_aberto,
-    is_featured: data.is_featured,
+    id: raw.id,
+    nome: raw.nome,
+    slug: raw.slug,
+    descricao: raw.descricao,
+    foto_url: raw.foto_url,
+    whatsapp_link: raw.whatsapp_link,
+    status_aberto: raw.status_aberto,
+    is_featured: raw.is_featured,
 
-    // 🔥 NORMALIZAÇÃO CRÍTICA
-    categorias: Array.isArray(data.categorias)
-      ? data.categorias[0] || null
-      : data.categorias || null,
+    // 🔥 CORREÇÃO AQUI (sem any)
+    categorias: raw.categorias?.[0] || null,
 
-    disponibilidade: data.disponibilidade || [],
-    menus: data.menus || [],
+    // 🔥 BLINDAGEM
+    disponibilidade: raw.disponibilidade ?? [],
+    menus: raw.menus ?? [],
   };
 }
