@@ -2,12 +2,15 @@ import { getPartnerBySlug } from "@/lib/getPartnerBySlug";
 import Image from "next/image";
 import Link from "next/link";
 
-interface Props {
-  params: { slug: string };
-}
+export default async function PartnerPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  // 🔥 NEXT 15 → params é async
+  const { slug } = await params;
 
-export default async function PartnerPage({ params }: Props) {
-  const data = await getPartnerBySlug(params.slug);
+  const data = await getPartnerBySlug(slug);
 
   if (!data) {
     return (
@@ -21,7 +24,7 @@ export default async function PartnerPage({ params }: Props) {
   const menus = data.menus ?? [];
   const disponibilidade = data.disponibilidade ?? [];
 
-  // 🔥 WHATSAPP INTELIGENTE
+  // 🔥 WHATSAPP COM MENSAGEM PRONTA
   const message = `Olá! Vim pelo site da Praia da Baleia e quero saber mais sobre ${data.nome}`;
   const whatsappUrl = `${data.whatsapp_link}?text=${encodeURIComponent(message)}`;
 
@@ -48,16 +51,18 @@ export default async function PartnerPage({ params }: Props) {
             {data.status_aberto ? "Aberto agora" : "Fechado"}
           </span>
 
-          <h1 className="mt-4">{data.nome}</h1>
+          <h1 className="mt-4 text-3xl md:text-5xl font-bold">
+            {data.nome}
+          </h1>
 
-          <p className="mt-2 text-lg opacity-90">
+          <p className="mt-3 text-lg opacity-90 max-w-xl">
             {data.descricao}
           </p>
 
           <a
             href={whatsappUrl}
             target="_blank"
-            className="inline-block mt-6 bg-white text-black px-6 py-3 rounded-full font-semibold"
+            className="inline-block mt-6 bg-white text-black px-6 py-3 rounded-full font-semibold hover:scale-105 transition"
           >
             Falar no WhatsApp
           </a>
@@ -66,7 +71,9 @@ export default async function PartnerPage({ params }: Props) {
 
       {/* CONTEXTO */}
       <section className="py-16 max-w-5xl mx-auto px-4 text-center">
-        <h2 className="mb-4">Por que escolher {data.nome}?</h2>
+        <h2 className="mb-4 text-2xl font-semibold">
+          Por que escolher {data.nome}?
+        </h2>
 
         <p className="text-gray-600 max-w-2xl mx-auto">
           Uma das experiências mais procuradas da Praia da Baleia,
@@ -74,27 +81,29 @@ export default async function PartnerPage({ params }: Props) {
         </p>
       </section>
 
-      {/* CONTEÚDO */}
+      {/* CONTEÚDO DINÂMICO */}
       <section className="py-20 max-w-5xl mx-auto px-4">
 
         {/* MENU */}
         {menus.length > 0 && (
           <>
-            <h2 className="mb-10 text-center">Cardápio</h2>
+            <h2 className="mb-10 text-center text-2xl font-semibold">
+              Cardápio
+            </h2>
 
             <div className="grid md:grid-cols-2 gap-6">
               {menus.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-white p-6 rounded-2xl shadow"
+                  className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition"
                 >
-                  <h3 className="font-bold">{item.nome}</h3>
+                  <h3 className="font-bold text-lg">{item.nome}</h3>
 
                   <p className="text-gray-500 text-sm mt-2">
                     {item.descricao}
                   </p>
 
-                  <p className="mt-4 font-semibold">
+                  <p className="mt-4 font-semibold text-[rgb(var(--color-primary))]">
                     R$ {item.preco}
                   </p>
                 </div>
@@ -106,7 +115,7 @@ export default async function PartnerPage({ params }: Props) {
         {/* DISPONIBILIDADE */}
         {disponibilidade.length > 0 && (
           <>
-            <h2 className="mt-16 mb-10 text-center">
+            <h2 className="mt-16 mb-10 text-center text-2xl font-semibold">
               Disponibilidade
             </h2>
 
@@ -138,14 +147,14 @@ export default async function PartnerPage({ params }: Props) {
 
       {/* CTA FINAL */}
       <section className="py-20 text-center">
-        <h2 className="mb-6">
+        <h2 className="mb-6 text-2xl font-semibold">
           Pronto para viver essa experiência?
         </h2>
 
         <a
           href={whatsappUrl}
           target="_blank"
-          className="bg-[rgb(var(--color-primary))] text-white px-8 py-4 rounded-full font-semibold"
+          className="bg-[rgb(var(--color-primary))] text-white px-8 py-4 rounded-full font-semibold hover:scale-105 transition"
         >
           Reservar agora via WhatsApp
         </a>
@@ -153,7 +162,7 @@ export default async function PartnerPage({ params }: Props) {
 
       {/* VOLTAR */}
       <div className="text-center pb-10">
-        <Link href="/parceiros" className="text-sm text-gray-500">
+        <Link href="/parceiros" className="text-sm text-gray-500 hover:underline">
           ← Voltar para parceiros
         </Link>
       </div>
