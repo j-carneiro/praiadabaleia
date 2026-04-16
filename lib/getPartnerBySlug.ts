@@ -41,6 +41,7 @@ export async function getPartnerBySlug(
   }
 
   if (data) {
+    console.log("RESULTADO:", data);
     return normalize(data);
   }
 
