@@ -1,6 +1,6 @@
 // components/NegocioCard.tsx
 import { Star } from 'lucide-react';
-import { Estabelecimento } from '@/types/estabelecimento'; // Importa o tipo criado
+import { Estabelecimento } from '@/types/'; // Importa o tipo criado
 
 interface NegocioCardProps {
   item: Estabelecimento;}
@@ -13,7 +13,7 @@ interface NegocioCardProps {
 // 3. Aplique a interface na função do componente
 export default function NegocioCard({ item }: NegocioCardProps) {
   return (
-    <div className="bg-white rounded-[2rem] p-6 shadow-xl border border-slate-100 flex flex-col items-center text-center transition-all hover:shadow-2xl">
+    <div className="bg-white rounded-4xl p-6 shadow-xl border border-slate-100 flex flex-col items-center text-center transition-all hover:shadow-2xl">
       {/* ... seu código permanece igual aqui ... */}
       <div className="relative -mt-16 mb-4">
         <div className="w-32 h-32 rounded-full border-4 border-[#215CA8] overflow-hidden shadow-lg bg-slate-100">

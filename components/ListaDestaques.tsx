@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import NegocioCard from './NegocioCard';
-import { Estabelecimento } from '@/types/estabelecimento';
+import { Estabelecimento } from '@/types/';
 
 export default function ListaDestaques({ initialData }: { initialData: Estabelecimento[] }) {
   const [filtro, setFiltro] = useState('todos');

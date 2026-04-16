@@ -25,7 +25,7 @@ export interface Estabelecimento {
   whatsapp_link: string;
   is_featured: boolean;
   slug: string;
-
+  status_aberto: boolean;
   categorias: Categoria | null;
   disponibilidade?: Disponibilidade[];
   menus?: Menu[];
