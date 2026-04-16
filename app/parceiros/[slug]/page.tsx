@@ -1,133 +1,162 @@
 import { getPartnerBySlug } from "@/lib/getPartnerBySlug";
-import { Section } from "@/components/Section";
-import { Button } from "@/components/Button";
+import Image from "next/image";
+import Link from "next/link";
 
-import { Disponibilidade, Menu } from "@/types";
-
-interface PageProps {
-  params: Promise<{
-    slug: string;
-  }>;
+interface Props {
+  params: { slug: string };
 }
 
-export default async function PartnerPage({ params }: PageProps) {
-  const { slug } = await params;
-  const data = await getPartnerBySlug(slug);
-
+export default async function PartnerPage({ params }: Props) {
+  const data = await getPartnerBySlug(params.slug);
 
   if (!data) {
     return (
-      <div className="py-20 text-center">
+      <div className="h-screen flex items-center justify-center">
         <h2>Parceiro não encontrado</h2>
       </div>
     );
   }
 
-  const isHospedagem = data.categorias?.slug === "hospedagem";
-  const isFood = data.categorias?.slug === "gastronomia";
+  // 🔥 NORMALIZAÇÃO (ANTI-ERRO TS)
+  const menus = data.menus ?? [];
+  const disponibilidade = data.disponibilidade ?? [];
+
+  // 🔥 WHATSAPP INTELIGENTE
+  const message = `Olá! Vim pelo site da Praia da Baleia e quero saber mais sobre ${data.nome}`;
+  const whatsappUrl = `${data.whatsapp_link}?text=${encodeURIComponent(message)}`;
 
   return (
-    <>
+    <div className="bg-[#f8fafc]">
+
       {/* HERO */}
-      <section className="h-[50vh] bg-[rgb(var(--color-primary))] text-white flex items-center justify-center text-center px-4">
-        <div className="max-w-2xl">
-          <h1 className="mb-4">{data.nome}</h1>
-          <p className="opacity-90">{data.descricao}</p>
-        </div>
-      </section>
+      <section className="relative h-[70vh] flex items-end">
+        <Image
+          src={data.foto_url}
+          alt={data.nome}
+          fill
+          className="object-cover"
+        />
 
-      {/* CONTEÚDO */}
-      <Section className="py-24">
+        <div className="absolute inset-0 bg-black/40" />
 
-        {/* 🏨 HOSPEDAGEM */}
-        {isHospedagem && (
-          <>
-            <h2 className="mb-8 text-center">Disponibilidade</h2>
+        <div className="relative z-10 p-8 text-white max-w-4xl">
+          <span
+            className={`px-3 py-1 text-sm rounded-full ${
+              data.status_aberto ? "bg-green-500" : "bg-red-500"
+            }`}
+          >
+            {data.status_aberto ? "Aberto agora" : "Fechado"}
+          </span>
 
-            <div className="grid md:grid-cols-3 gap-6">
-              {data.disponibilidade?.length ? (
-                data.disponibilidade.map((item: Disponibilidade) => (
-                  <div key={item.id} className="card p-6 text-center">
-                    <p className="font-semibold">
-                      {item.data_inicio} → {item.data_fim}
-                    </p>
+          <h1 className="mt-4">{data.nome}</h1>
 
-                    <span
-                      className={`text-sm ${
-                        item.status === "disponivel"
-                          ? "text-green-600"
-                          : "text-red-500"
-                      }`}
-                    >
-                      {item.status}
-                    </span>
-                  </div>
-                ))
-              ) : (
-                <p className="text-center col-span-full text-gray-500">
-                  Nenhuma disponibilidade cadastrada
-                </p>
-              )}
-            </div>
-          </>
-        )}
-
-        {/* 🍽️ GASTRONOMIA */}
-        {isFood && (
-          <>
-            <h2 className="mb-8 text-center">Cardápio</h2>
-
-            <div className="grid md:grid-cols-2 gap-6">
-              {data.menus?.length ? (
-                data.menus.map((item: Menu) => (
-                  <div key={item.id} className="card p-6">
-                    <h3 className="mb-2">{item.nome}</h3>
-
-                    <p className="mb-3">{item.descricao}</p>
-
-                    <span className="font-semibold text-[rgb(var(--color-primary))]">
-                      R$ {item.preco.toFixed(2)}
-                    </span>
-                  </div>
-                ))
-              ) : (
-                <p className="text-center col-span-full text-gray-500">
-                  Cardápio não disponível
-                </p>
-              )}
-            </div>
-          </>
-        )}
-
-        {/* 🧭 OUTROS TIPOS */}
-        {!isHospedagem && !isFood && (
-          <div className="text-center">
-            <p className="text-gray-500">
-              Entre em contato para mais informações sobre este parceiro.
-            </p>
-          </div>
-        )}
-
-      </Section>
-
-      {/* CTA WHATSAPP */}
-      <Section className="py-20">
-        <div className="bg-[rgb(var(--color-primary))] text-white text-center py-16 rounded-4xl">
-          <h2 className="mb-4">Fale diretamente com o parceiro</h2>
-
-          <p className="mb-6 opacity-90">
-            Tire dúvidas, consulte disponibilidade ou faça seu pedido agora mesmo
+          <p className="mt-2 text-lg opacity-90">
+            {data.descricao}
           </p>
 
           <a
-            href={data.whatsapp_link}
+            href={whatsappUrl}
             target="_blank"
-            className="btn-white"
+            className="inline-block mt-6 bg-white text-black px-6 py-3 rounded-full font-semibold"
           >
-            Chamar no WhatsApp
+            Falar no WhatsApp
           </a>
         </div>
-      </Section>
-    </>
+      </section>
+
+      {/* CONTEXTO */}
+      <section className="py-16 max-w-5xl mx-auto px-4 text-center">
+        <h2 className="mb-4">Por que escolher {data.nome}?</h2>
+
+        <p className="text-gray-600 max-w-2xl mx-auto">
+          Uma das experiências mais procuradas da Praia da Baleia,
+          ideal para quem busca qualidade, conforto e atendimento direto.
+        </p>
+      </section>
+
+      {/* CONTEÚDO */}
+      <section className="py-20 max-w-5xl mx-auto px-4">
+
+        {/* MENU */}
+        {menus.length > 0 && (
+          <>
+            <h2 className="mb-10 text-center">Cardápio</h2>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {menus.map((item) => (
+                <div
+                  key={item.id}
+                  className="bg-white p-6 rounded-2xl shadow"
+                >
+                  <h3 className="font-bold">{item.nome}</h3>
+
+                  <p className="text-gray-500 text-sm mt-2">
+                    {item.descricao}
+                  </p>
+
+                  <p className="mt-4 font-semibold">
+                    R$ {item.preco}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* DISPONIBILIDADE */}
+        {disponibilidade.length > 0 && (
+          <>
+            <h2 className="mt-16 mb-10 text-center">
+              Disponibilidade
+            </h2>
+
+            <div className="grid md:grid-cols-3 gap-4">
+              {disponibilidade.map((item) => (
+                <div
+                  key={item.id}
+                  className="bg-white p-4 rounded-xl text-center shadow"
+                >
+                  <p className="text-sm text-gray-500">
+                    {item.data_inicio} → {item.data_fim}
+                  </p>
+
+                  <span
+                    className={`text-sm font-semibold ${
+                      item.status === "disponivel"
+                        ? "text-green-600"
+                        : "text-red-500"
+                    }`}
+                  >
+                    {item.status}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+      </section>
+
+      {/* CTA FINAL */}
+      <section className="py-20 text-center">
+        <h2 className="mb-6">
+          Pronto para viver essa experiência?
+        </h2>
+
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          className="bg-[rgb(var(--color-primary))] text-white px-8 py-4 rounded-full font-semibold"
+        >
+          Reservar agora via WhatsApp
+        </a>
+      </section>
+
+      {/* VOLTAR */}
+      <div className="text-center pb-10">
+        <Link href="/parceiros" className="text-sm text-gray-500">
+          ← Voltar para parceiros
+        </Link>
+      </div>
+    </div>
   );
 }
