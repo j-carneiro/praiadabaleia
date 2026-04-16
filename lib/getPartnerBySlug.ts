@@ -17,6 +17,7 @@ export async function getPartnerBySlug(
       descricao,
       foto_url,
       whatsapp_link,
+      status_aberto,
       is_featured,
       categorias (nome, slug),
       disponibilidade (
